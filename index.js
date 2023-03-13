@@ -218,8 +218,8 @@ const upload = multer({
 app.post("/register",upload.single("myfiles"),async(req,res)=>{
        try{
        console.log( "kushal",req.body)
-       console.log("lkj",req.file)
-       res.send(req.file.filename)
+         console.log("lkj",req.file)
+    res.send(req.file.filename)
      
           
            const addlogin= new login({ 
@@ -229,7 +229,7 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
                emplname: req.body.emplname,
               empemail: req.body.empemail,
               emppass:req.body.emppass,
-              image:req.body.image
+            
              
               
                
