@@ -12,10 +12,10 @@ const app = express();
 var cors = require('cors')
 app.use(cors())
 
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     next();
-//   });
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
   app.use(cors({
     origin: '*'
 }));
@@ -215,12 +215,10 @@ const upload = multer({
 
 
 
-app.post("/register",async(req,res)=>{
+app.post("/register",upload.single("myfiles"),async(req,res)=>{
        try{
        console.log( "kushal",req.body)
-         console.log("lkj",req.file)
-    
-     
+     const game="game"
           
            const addlogin= new login({ 
 
@@ -229,7 +227,7 @@ app.post("/register",async(req,res)=>{
                emplname: req.body.emplname,
               empemail: req.body.empemail,
               emppass:req.body.emppass,
-            
+              image:game
              
               
                
