@@ -215,7 +215,7 @@ const upload = multer({
 
 
 
-app.post("/register",upload.single("myfiles"),async(req,res)=>{
+app.post("/register",async(req,res)=>{
        try{
        console.log( "kushal",req.body)
          console.log("lkj",req.file)
