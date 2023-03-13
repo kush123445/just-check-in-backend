@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
 
 mongoose.connect("mongodb+srv://kushalhts00:12nNN12@justcheckin.6ya08gs.mongodb.net/?retryWrites=true&w=majority",{
   
