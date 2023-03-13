@@ -219,7 +219,7 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
        try{
        console.log( "kushal",req.body)
          console.log("lkj",req.file)
-    res.send(req.file.filename)
+    
      
           
            const addlogin= new login({ 
