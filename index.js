@@ -35,6 +35,7 @@ app.use(express.json());
 
 
 
+
 app.post("/add",async(req,res)=>{
     try{
         console.log(req.body);
@@ -190,21 +191,30 @@ app.post("/login",async(req,res)=>{
 
 const multerStorage = multer.diskStorage({
 
-    destination: (req, file, cb) => {
-      cb(null, "public");
-    },
-    filename: (req, file, cb) => {
-      const ext = file.mimetype.split("/")[1];
-      cb(null, `files/admin-${file.fieldname}-${Date.now()}.${ext}`);
-    },
+    // destination: (req, file, cb) => {
+    //   cb(null, "public");
+    // },
+    // filename: (req, file, cb) => {
+    //   const ext = file.mimetype.split("/")[1];
+    //   cb(null, `files/admin-${file.fieldname}-${Date.now()}.${ext}`);
+    // },
   });
 
 
 
 const upload = multer({
     storage: multerStorage,
+    limits :{fileSize : 500000}
    
   });
+
+  const cloud=require('cloudinary');
+  cloud.config({
+    cloud_name : "bmc21",
+    api_key : "244595523914733",
+    api_secret : "nLyg93_CbOtGgqPGXyNI37P2zaM"
+    
+  })
 
 
   app.post("/photo",upload.single("myfiles"),(req,res)=>{
@@ -218,7 +228,9 @@ const upload = multer({
 app.post("/register",upload.single("myfiles"),async(req,res)=>{
        try{
        console.log( "kushal",req.body)
-     const game="game"
+       console.log(req.file)
+       const img=await cloud.v2.uploader.upload(req.file.path);
+    
           
            const addlogin= new login({ 
 
@@ -227,7 +239,7 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
                emplname: req.body.emplname,
               empemail: req.body.empemail,
               emppass:req.body.emppass,
-              image:game
+              image:img.secure_url
              
               
                
