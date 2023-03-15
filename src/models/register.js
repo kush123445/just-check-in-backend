@@ -8,7 +8,8 @@ const registerschema = new mongoose.Schema({
             unique:true
       },
       emppass:String  ,
-      image :String
+      image :String,
+      cloud_id: String
      
       
 })
