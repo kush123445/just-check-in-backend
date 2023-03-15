@@ -269,15 +269,19 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
 
 app.delete('/deregister/:email', async(req, res) =>
             {
-              const user=login.find({"empemail":req.params.email})
-             const cloud=   await cloud.uploader.destroy(user.cloud_id);
+                try{
+            //   const user=await login.find({empemail:req.params.email})
+            //   console.log(user)
+            //   console.log(user[0].cloud_id)
+            //  const cloudi=   await cloud.uploader.destroy(user.cloud_id);
+            //  console.log(cloudi)
 
-          const deleteddocument=    await  login .findOneAndRemove({"empemail" : req.params.email})
-          const deldoc =await additem.deleteMany({"empemail" : req.params.email})
-          try{
+          const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
+          const deldoc =await additem.deleteMany({empemail : req.params.email})
+          
             if(deleteddocument != null)
-            {  
-                const items= await  additem.findOne({"empemail":email});
+            {  console.log("hi")
+                const items= await  additem.findOne({empemail:req.params.email});
                 if(items == null){
                     res.status(200).send('DOCUMENT DELETED successfully!' + deleteddocument);
                 }
@@ -290,11 +294,13 @@ app.delete('/deregister/:email', async(req, res) =>
 //           })//CLOSE CATCH
              }//CLOSE CALLBACK FUNCTION BODY Line 60
              else{
+                console.log("li")
                 res.status(404).send('DOCUMENT (account) NOT DELETED successfully!' + deleteddocument);
              }
             }
-            catch{
-                res.status(500).send('DOCUMENT DELETED successfully!' + deleteddocument);
+            catch(e){
+                console.log(e)
+                res.status(500).send('DOCUMENT not DELETED successfully!' );
             }
             }); 
         //CLOSE Delete METHOD Line 59
