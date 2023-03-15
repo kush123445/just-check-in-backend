@@ -281,7 +281,8 @@ app.delete('/deregister/:email', async(req, res) =>
               console.log(deleteAccount)
 
               if(deleteAccount.length!=0){
-                if(deleteAccount.cloud_id){
+                console.log(deleteAccount[0].cloud_id,"kushal")
+                if(deleteAccount[0].cloud_id != ""){
                     const cloudi=   await cloud.uploader.destroy(user[0].cloud_id);
                 }
                 const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
