@@ -273,24 +273,37 @@ app.delete('/deregister/:email', async(req, res) =>
                 try{
               const user=await login.find({empemail:req.params.email})
               console.log(user)
-              console.log(user[0].cloud_id)
+             // console.log(user[0].cloud_id)
+              const cloud_id="bpf5ovmyw2a1aijggotv"
 
 
               const deleteAccount=    await  login .find({empemail : req.params.email})
+              console.log(deleteAccount)
 
-              if(deleteAccount!=null){
+              if(deleteAccount.length!=0){
+                if(deleteAccount.cloud_id){
+                    const cloudi=   await cloud.uploader.destroy(cloud_id);
+                }
                 const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
+              }else{
+                console.log("deleted sab kuch");
               }
               
 
-              const deldoc =await additem.findMany({empemail : req.params.email})
+              const deldoc =await additem.find({empemail : req.params.email})
 
-              if(deldoc !=null){
-                const deldocuments =await additem.deleteMany({empemail : req.params.email})
+              if(deldoc.length!=0){
+               
+                const deldocuments =await additem.deleteMany({empemail : req.params.email});
+                res.send("deleted sab kuch");
+              }
+              else{
+                console.log("place deleted");
+                res.send("deleted sab kuch");
               }
 
 
-              const cloudi=   await cloud.uploader.destroy(user[0].cloud_id);
+              
 
 
 
