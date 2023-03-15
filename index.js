@@ -239,7 +239,8 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
                emplname: req.body.emplname,
               empemail: req.body.empemail,
               emppass:req.body.emppass,
-              image:img.secure_url
+              image:img.secure_url,
+              cloud_id:img.public_id
              
               
                
@@ -260,6 +261,44 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
        res.send(e);
        }
 })
+
+
+
+
+
+
+app.delete('/deregister/:email', async(req, res) =>
+            {
+
+             const cloud=   await cloud.uploader.destroy(user.cloud_id);
+
+          const deleteddocument=    await  login .findOneAndRemove({"empemail" : req.params.email})
+          const deldoc =await additem.deleteMany({"empemail" : req.params.email})
+          try{
+            if(deleteddocument != null)
+            {  
+                const items= await  additem.findOne({"empemail":email});
+                if(items == null){
+                    res.status(200).send('DOCUMENT DELETED successfully!' + deleteddocument);
+                }
+                else{
+                    res.status(500).send('DOCUMENT (item) NOT DELETED successfully!' + deleteddocument);
+                }
+                
+
+
+//           })//CLOSE CATCH
+             }//CLOSE CALLBACK FUNCTION BODY Line 60
+             else{
+                res.status(404).send('DOCUMENT (account) NOT DELETED successfully!' + deleteddocument);
+             }
+            }
+            catch{
+                res.status(500).send('DOCUMENT DELETED successfully!' + deleteddocument);
+            }
+            }); 
+        //CLOSE Delete METHOD Line 59
+
 
 app.listen(port,()=>{
     console.log(`connection is live at ${port}`);
