@@ -269,7 +269,7 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
 
 app.delete('/deregister/:email', async(req, res) =>
             {
-
+              const user=login.find({"empemail":req.params.email})
              const cloud=   await cloud.uploader.destroy(user.cloud_id);
 
           const deleteddocument=    await  login .findOneAndRemove({"empemail" : req.params.email})
