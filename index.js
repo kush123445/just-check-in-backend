@@ -230,6 +230,7 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
        console.log( "kushal",req.body)
        console.log(req.file)
        const img=await cloud.v2.uploader.upload(req.file.path);
+       console.log(img)
     
           
            const addlogin= new login({ 
@@ -270,11 +271,11 @@ app.post("/register",upload.single("myfiles"),async(req,res)=>{
 app.delete('/deregister/:email', async(req, res) =>
             {
                 try{
-            //   const user=await login.find({empemail:req.params.email})
-            //   console.log(user)
-            //   console.log(user[0].cloud_id)
-            //  const cloudi=   await cloud.uploader.destroy(user.cloud_id);
-            //  console.log(cloudi)
+              const user=await login.find({empemail:req.params.email})
+              console.log(user)
+              console.log(user[0].cloud_id)
+             const cloudi=   await cloud.uploader.destroy(user.cloud_id);
+             console.log(cloudi)
 
           const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
           const deldoc =await additem.deleteMany({empemail : req.params.email})
