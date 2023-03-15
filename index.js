@@ -273,8 +273,8 @@ app.delete('/deregister/:email', async(req, res) =>
                 try{
               const user=await login.find({empemail:req.params.email})
               console.log(user)
-             // console.log(user[0].cloud_id)
-              const cloud_id="bpf5ovmyw2a1aijggotv"
+              console.log(user[0].cloud_id)
+             // const cloud_id="bpf5ovmyw2a1aijggotv"
 
 
               const deleteAccount=    await  login .find({empemail : req.params.email})
@@ -282,7 +282,7 @@ app.delete('/deregister/:email', async(req, res) =>
 
               if(deleteAccount.length!=0){
                 if(deleteAccount.cloud_id){
-                    const cloudi=   await cloud.uploader.destroy(cloud_id);
+                    const cloudi=   await cloud.uploader.destroy(user[0].cloud_id);
                 }
                 const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
               }else{
