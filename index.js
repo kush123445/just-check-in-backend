@@ -274,30 +274,51 @@ app.delete('/deregister/:email', async(req, res) =>
               const user=await login.find({empemail:req.params.email})
               console.log(user)
               console.log(user[0].cloud_id)
-             const cloudi=   await cloud.uploader.destroy(user.cloud_id);
-             console.log(cloudi)
 
-          const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
-          const deldoc =await additem.deleteMany({empemail : req.params.email})
+
+              const deleteAccount=    await  login .find({empemail : req.params.email})
+
+              if(deleteAccount!=null){
+                const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
+              }
+              
+
+              const deldoc =await additem.findMany({empemail : req.params.email})
+
+              if(deldoc !=null){
+                const deldocuments =await additem.deleteMany({empemail : req.params.email})
+              }
+
+
+              const cloudi=   await cloud.uploader.destroy(user[0].cloud_id);
+
+
+
+
+
+
+           
+
+        //   const deleteddocument=    await  login .findOneAndRemove({empemail : req.params.email})
+        //   .then(async(res)=>{
+        //     const deldoc =await additem.deleteMany({empemail : req.params.email})
+        //     .then(async(res)=>{
+        //         const cloudi=   await cloud.uploader.destroy(user[0].cloud_id);
+
+        //     })
+        //   })
+        
           
-            if(deleteddocument != null)
-            {  console.log("hi")
-                const items= await  additem.findOne({empemail:req.params.email});
-                if(items == null){
-                    res.status(200).send('DOCUMENT DELETED successfully!' + deleteddocument);
-                }
-                else{
-                    res.status(500).send('DOCUMENT (item) NOT DELETED successfully!' + deleteddocument);
-                }
-                
 
+        //   const loginuser= await  login.findOne({empemail:req.params.email});
+        //   const addplace= await  login.findOne({empemail:req.params.email});
 
-//           })//CLOSE CATCH
-             }//CLOSE CALLBACK FUNCTION BODY Line 60
-             else{
-                console.log("li")
-                res.status(404).send('DOCUMENT (account) NOT DELETED successfully!' + deleteddocument);
-             }
+        //   if(loginuser==null && addplace==null){
+        //     res.status(200).send('DOCUMENT  DELETED successfully!' );
+        //   }
+        //   else{
+        //     res.status(500).send('DOCUMENT not DELETED successfully!' );
+        //   }
             }
             catch(e){
                 console.log(e)
