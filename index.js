@@ -25,8 +25,8 @@ app.use(
         extended:true,
     })
 );
-
-app.use(express.static('public'));
+const pathtobuild = __dirname + '/app/build/';
+app.use(express.static(pathtobuild));
 
 const port = process.env.PORT || 5000;
 
@@ -339,7 +339,12 @@ app.delete('/deregister/:email', async(req, res) =>
                 res.status(500).send('DOCUMENT not DELETED successfully!' );
             }
             }); 
-        //CLOSE Delete METHOD Line 59
+        //close
+
+
+        app.get('*', (req, res) => {
+            res.sendFile(path.join(__dirname, 'app', 'build', 'index.html'));
+          });
 
 
 app.listen(port,()=>{
